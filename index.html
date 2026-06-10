@@ -11,7 +11,6 @@
     --bg-wood: #402819;
 
     --panel: #ead8b5;
-    --panel-dark: #d0ad78;
     --ink: #24180f;
     --muted: #6d563d;
 
@@ -178,6 +177,20 @@
     color: #1f140c;
   }
 
+  .toggle-title {
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.12s ease, letter-spacing 0.12s ease;
+  }
+
+  .toggle-title:hover {
+    transform: scale(1.015);
+  }
+
+  .toggle-title:active {
+    transform: scale(0.985);
+  }
+
   .home-sub {
     margin: 0;
     color: var(--muted);
@@ -201,6 +214,12 @@
     width: min(500px, 100%);
     display: grid;
     gap: 12px;
+    justify-self: center;
+    justify-items: stretch;
+  }
+
+  .menu-buttons button {
+    width: 100%;
   }
 
   .start-button,
@@ -216,10 +235,15 @@
     gap: 10px;
   }
 
+  .small-buttons button {
+    width: 100%;
+  }
+
   .mode-layout {
     height: 100%;
     display: grid;
     align-content: center;
+    justify-items: center;
     gap: 18px;
     text-align: center;
     position: relative;
@@ -246,6 +270,11 @@
     margin: 0 auto;
     display: grid;
     gap: 14px;
+    justify-items: stretch;
+  }
+
+  .mode-card button {
+    width: 100%;
   }
 
   .info-panel {
@@ -263,7 +292,7 @@
   .game-layout {
     height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 62px 1fr 54px;
     gap: 8px;
     position: relative;
     z-index: 1;
@@ -273,18 +302,19 @@
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 10px;
-    align-items: center;
+    align-items: stretch;
+    min-height: 0;
   }
 
   .turn-banner,
   .count-banner {
-    min-height: 54px;
     display: grid;
     align-content: center;
-    padding: 8px 14px;
+    padding: 7px 14px;
     border-radius: 9px;
     border: 1px solid rgba(81, 49, 25, 0.32);
     background: rgba(255, 239, 207, 0.82);
+    min-height: 0;
   }
 
   .turn-banner {
@@ -300,7 +330,7 @@
   }
 
   .turn-value {
-    font-size: clamp(24px, 4vw, 42px);
+    font-size: clamp(23px, 3.7vw, 38px);
     line-height: 1;
     font-weight: 1000;
     letter-spacing: -0.06em;
@@ -320,14 +350,16 @@
     font-weight: 900;
     color: #6d563d;
     letter-spacing: 0;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
   }
 
   .board-wrap {
     min-height: 0;
+    min-width: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
   }
 
   .board {
@@ -341,14 +373,18 @@
     box-shadow:
       inset 0 0 0 3px rgba(255,255,255,0.13),
       0 12px 30px rgba(0,0,0,0.28);
+    flex: 0 0 auto;
+    transform: translateZ(0);
   }
 
   .square {
     position: relative;
-    display: grid;
-    place-items: center;
+    display: block;
+    min-width: 0;
+    min-height: 0;
     user-select: none;
     touch-action: manipulation;
+    overflow: hidden;
   }
 
   .square.light {
@@ -364,11 +400,15 @@
   .square.capture-valid::after {
     content: "";
     position: absolute;
+    left: 50%;
+    top: 50%;
     width: 34%;
     height: 34%;
     border-radius: 50%;
     z-index: 1;
+    transform: translate(-50%, -50%);
     box-shadow: 0 0 0 5px rgba(255,255,255,0.18);
+    pointer-events: none;
   }
 
   .square.valid::after {
@@ -380,12 +420,13 @@
   }
 
   .square.selected {
-    outline: 5px solid #facc15;
-    outline-offset: -5px;
+    box-shadow: inset 0 0 0 5px #facc15;
   }
 
   .piece {
-    position: relative;
+    position: absolute;
+    left: 50%;
+    top: 50%;
     width: 76%;
     height: 76%;
     border-radius: 50%;
@@ -393,10 +434,12 @@
     display: grid;
     place-items: center;
     cursor: pointer;
+    transform: translate(-50%, -50%);
     box-shadow:
       inset 0 6px 8px rgba(255,255,255,0.20),
       inset 0 -9px 12px rgba(0,0,0,0.28),
       0 5px 8px rgba(0,0,0,0.30);
+    pointer-events: none;
   }
 
   .piece.black {
@@ -422,32 +465,37 @@
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 8px;
-    align-items: center;
+    align-items: stretch;
+    min-height: 0;
   }
 
   .message {
-    min-height: 44px;
+    height: 54px;
     display: grid;
     align-content: center;
     background: rgba(255, 239, 207, 0.86);
     border: 1px solid rgba(81, 49, 25, 0.32);
     border-radius: 9px;
-    padding: 8px 12px;
+    padding: 7px 12px;
     color: var(--muted);
     font-weight: 900;
-    font-size: clamp(13px, 1.7vw, 16px);
-    line-height: 1.35;
+    font-size: clamp(12px, 1.6vw, 15px);
+    line-height: 1.3;
+    overflow: hidden;
   }
 
   .bottom-actions {
+    height: 54px;
     display: flex;
     gap: 8px;
     justify-content: center;
   }
 
   .bottom-actions button {
-    padding: 9px 12px;
+    height: 54px;
+    padding: 8px 12px;
     font-size: clamp(12px, 1.5vw, 14px);
+    white-space: nowrap;
   }
 
   .modal {
@@ -626,6 +674,10 @@
       border-radius: 9px;
     }
 
+    .game-layout {
+      grid-template-rows: 88px 1fr 92px;
+    }
+
     .hud-simple {
       grid-template-columns: 1fr;
       gap: 5px;
@@ -633,22 +685,28 @@
 
     .turn-banner,
     .count-banner {
-      min-height: 42px;
-      padding: 6px 10px;
+      padding: 5px 10px;
       text-align: center;
     }
 
     .bottom-bar {
       grid-template-columns: 1fr;
+      gap: 5px;
     }
 
     .bottom-actions {
       order: 2;
+      height: 42px;
+    }
+
+    .bottom-actions button {
+      height: 42px;
+      padding: 6px 10px;
     }
 
     .message {
-      min-height: 38px;
-      padding: 6px 9px;
+      height: 45px;
+      padding: 5px 9px;
     }
 
     .piece {
@@ -683,19 +741,14 @@
       display: none;
     }
 
-    .turn-banner,
-    .count-banner {
-      min-height: 40px;
-      padding: 5px 9px;
+    .game-layout {
+      grid-template-rows: 52px 1fr 48px;
     }
 
+    .message,
+    .bottom-actions,
     .bottom-actions button {
-      padding: 7px 10px;
-    }
-
-    .message {
-      min-height: 34px;
-      padding: 6px 9px;
+      height: 48px;
     }
   }
 </style>
@@ -707,8 +760,8 @@
     <div class="shell home-layout">
       <div class="home-content">
         <div class="home-mark">⛂ ⛀</div>
-        <h1>CHECKERS</h1>
-        <p class="home-sub">오래된 수읽기의 게임, 체커</p>
+        <h1 id="mainTitle" class="toggle-title" onclick="toggleGameTitle()">CHECKERS</h1>
+        <p id="homeSubTitle" class="home-sub">오래된 수읽기의 게임, 체커</p>
         <div id="loreText" class="lore-card"></div>
 
         <div class="menu-buttons">
@@ -927,6 +980,17 @@
 
     updateOptionsUI();
     updateRulesText();
+  }
+
+  function toggleGameTitle() {
+    const title = document.getElementById("mainTitle");
+    const subTitle = document.getElementById("homeSubTitle");
+    const isCheckers = title.textContent === "CHECKERS";
+
+    title.textContent = isCheckers ? "DRAUGHTS" : "CHECKERS";
+    subTitle.textContent = isCheckers
+      ? "오래된 수읽기의 게임, 드래프츠"
+      : "오래된 수읽기의 게임, 체커";
   }
 
   function currentRules() {
@@ -1150,6 +1214,23 @@
     return board;
   }
 
+  function shouldFlipBoard() {
+    return state.mode === "computer" && state.humanSide === BLACK;
+  }
+
+  function displayToBoard(dr, dc) {
+    const size = currentRules().boardSize;
+
+    if (!shouldFlipBoard()) {
+      return { r: dr, c: dc };
+    }
+
+    return {
+      r: size - 1 - dr,
+      c: size - 1 - dc
+    };
+  }
+
   function render() {
     if (!document.getElementById("gameScreen").classList.contains("active")) return;
 
@@ -1212,8 +1293,10 @@
     boardEl.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     boardEl.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
-    for (let r = 0; r < size; r++) {
-      for (let c = 0; c < size; c++) {
+    for (let dr = 0; dr < size; dr++) {
+      for (let dc = 0; dc < size; dc++) {
+        const { r, c } = displayToBoard(dr, dc);
+
         const square = document.createElement("div");
         square.className = `square ${isDarkSquare(r, c) ? "dark" : "light"}`;
         square.onclick = () => onSquareClick(r, c);
